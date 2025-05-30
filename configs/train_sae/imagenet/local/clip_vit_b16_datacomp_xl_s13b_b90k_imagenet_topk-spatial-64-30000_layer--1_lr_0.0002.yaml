@@ -1,6 +1,6 @@
 batch_size: 32
 ckpt_path: ''
-data_path: /datasets/ImageNet-complete
+data_path: /datasets/ImageNet
 dataset_name: imagenet
 lr: 0.0002
 lr_scheduler: MultiStepLR
@@ -14,5 +14,5 @@ sae_hidden_dim: 30000
 sae_k: 64
 sae_layer_idx: -1
 sae_token: spatial
-wandb_api_key: 119fe3ea513aead1b4d78dfc1f90967d04b56cc1
+wandb_api_key: ''
 wandb_project_name: train-sae-0
