@@ -1,0 +1,7 @@
+batch_size: 32
+ckpt_path: ''
+data_path: /datasets/ImageNet-complete
+dataset_name: imagenet
+model_name: clip_vit_mobiles2_datacompdr
+wandb_api_key: 119fe3ea513aead1b4d78dfc1f90967d04b56cc1
+wandb_project_name: attributing-clip-imagenet-0
