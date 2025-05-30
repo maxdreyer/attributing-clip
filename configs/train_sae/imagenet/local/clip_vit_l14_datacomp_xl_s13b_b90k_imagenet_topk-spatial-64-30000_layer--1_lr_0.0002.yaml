@@ -9,10 +9,10 @@ milestones:
 - 28
 model_name: clip_vit_l14_datacomp_xl_s13b_b90k
 num_epochs: 30
-sae_ckpt_path: checkpoints/clip_vit_l14_datacomp_xl_s13b_b90k_imagenet_topk-cls-64-30000_layer--1_lr_0.0002/last.ckpt
+sae_ckpt_path: checkpoints/clip_vit_l14_datacomp_xl_s13b_b90k_imagenet_topk-spatial-64-30000_layer--1_lr_0.0002/last.ckpt
 sae_hidden_dim: 30000
 sae_k: 64
 sae_layer_idx: -1
 sae_token: spatial
-wandb_api_key: ''
-wandb_project_name: train-sae-0
+wandb_api_key: your_wandb_api_key_here
+wandb_project_name: saemanticlens-train-sae-1
