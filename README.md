@@ -48,7 +48,6 @@ Most CLIP models from OpenCLIP are supported, including:
 
 | Model ID                               | Architecture   | Hidden Dim | Params (M) |
 |----------------------------------------|----------------|------------|------------|
-| `clip_vit_mobiles2_datacompdr`         | MobileCLIP-S2  | 512        | 35.7       |
 | `clip_vit_b32_datacomp_m_s128m_b4k`    | ViT-B/32       | 768        | 151.3      |
 | `clip_vit_b32_laion400m_e32`           | ViT-B/32       | 768        | 151.3      |
 | `clip_vit_b32_laion2b_s34b_b79k`       | ViT-B/32       | 768        | 151.3      |
