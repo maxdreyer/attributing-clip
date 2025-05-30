@@ -2,4 +2,4 @@
 imagenet_dir: /datasets/ImageNet-complete
 
 # WANDB CONFIG
-wandb_api_key: '119fe3ea513aead1b4d78dfc1f90967d04b56cc1'
+wandb_api_key: 'your_wandb_api_key_here'
