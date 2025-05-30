@@ -15,7 +15,7 @@ with open("configs/local_config.yaml", "r") as stream:
 _base_config = {
     'dataset_name': 'imagenet',
     'wandb_api_key': local_config['wandb_api_key'],
-    'wandb_project_name': 'train-sae-0',
+    'wandb_project_name': 'saemanticlens-train-sae-1',
     'num_epochs': 30,
     'lr_scheduler': 'MultiStepLR',
     'milestones': [24, 28],
@@ -44,7 +44,6 @@ for model_name in [
     'clip_vit_l14_datacomp_xl_s13b_b90k',
     'clip_vit_h14_dfn5b',
     'clip_vit_l14_336_openai',
-    # ... add more models as needed
 ]:
 
     for lr in [2e-4]:
@@ -72,6 +71,6 @@ for model_name in [
 
                         config = copy.deepcopy(base_config)
                         config_name = f"{model_name}_{base_config['dataset_name']}_topk-{sae_token}-{sae_k}-{sae_hidden_dim}_layer-{sae_layer_idx}_lr_{lr}"
-                        _base_config['sae_ckpt_path'] = f"checkpoints/{config_name}/last.ckpt"
+                        config['sae_ckpt_path'] = f"checkpoints/{config_name}/last.ckpt"
                         store_local(config, config_name)
                         store_cluster(config, config_name)
