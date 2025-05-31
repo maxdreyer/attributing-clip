@@ -25,11 +25,12 @@ def get_args():
     parser.add_argument(
         '--config_file', type=str,
         default="configs/train_sae/imagenet/local/clip_vit_h14_dfn5b_imagenet_topk-spatial-64-30000_layer--1_lr_0.0002.yaml")
-    parser.add_argument('--most_aligned', type=str2bool, default=False,)
-    parser.add_argument('--pooling_mode', default="mean", type=str)  # pooling mode for the activations (mean, max)
-    parser.add_argument('--min_activation', default=1.5, type=float)  # minimum activation value to consider
-    parser.add_argument('--min_clarity', default=0.43, type=float)  # minimum clarity value to consider
-    parser.add_argument('--max_clarity', default=1.0, type=float)  # maximum clarity value to consider
+    parser.add_argument('--most_aligned', type=str2bool, default=True,)
+    parser.add_argument('--custom_prompt', type=str, default="USA") # custom prompt for probing
+    parser.add_argument('--pooling_mode', type=str, default="mean")  # pooling mode for the activations (mean, max)
+    parser.add_argument('--min_activation', type=float, default=0)  # minimum activation value to consider
+    parser.add_argument('--min_clarity', type=float, default=0.40)  # minimum clarity value to consider
+    parser.add_argument('--max_clarity', type=float, default=1.0)  # maximum clarity value to consider
     return parser.parse_args()
 
 
@@ -71,7 +72,7 @@ templates = [
     "{}",
 ]
 
-label_set = IN21k_class_labels
+label_set = IN21k_class_labels if not args.custom_prompt else args.custom_prompt.split(';')
 label_features_all = []
 batch_size = 48
 

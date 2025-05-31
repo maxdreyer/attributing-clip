@@ -132,9 +132,10 @@ where `$config_file` is the path to the configuration file for visualizing featu
 
 To find semantically (un-)aligned components with high activation magnitudes, we can use the following script:
 ```bash
-python3 -m experiments.find_relevant_semantic_outliers --config_file $config_file --most_aligned 'False' --min_activation 1.0
+python3 -m experiments.find_relevant_semantic_outliers --config_file $config_file --most_aligned 'False' --min_activation 1.0 --custom_prompt ''
 ```
 where `$config_file` is the path to the configuration file for finding semantic outliers, `most_aligned` specifies whether to find the most aligned or least aligned components, and `min_activation` specifies the minimum activation threshold for the components.
+Further, `custom_prompt` can be used to specify a custom prompt for the search. If left empty, the ImageNet-21k class labels are used.
 
 Note, that we here compare components with textual concepts derived from the ImageNet-21k dataset.
 
