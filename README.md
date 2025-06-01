@@ -127,18 +127,32 @@ where `$config_file` is the path to the configuration file for visualizing featu
 
 ### Find Semantically (Un-)Aligned Components
 <div align="center">
-<img src="static/semantic_outliers.png" width="900" alt="Visualization" />
+<img src="static/semantic_outliers.png" width="900" alt="Semantic Outliers" />
 </div>
 
 To find semantically (un-)aligned components with high activation magnitudes, we can use the following script:
 ```bash
-python3 -m experiments.find_relevant_semantic_outliers --config_file $config_file --most_aligned 'False' --min_activation 1.0 --custom_prompt ''
+python3 -m experiments.find_relevant_semantics --config_file $config_file --most_aligned 'False' --min_activation 1.0 --custom_prompt ''
 ```
 where `$config_file` is the path to the configuration file for finding semantic outliers, `most_aligned` specifies whether to find the most aligned or least aligned components, and `min_activation` specifies the minimum activation threshold for the components.
 Further, `custom_prompt` can be used to specify a custom prompt for the search. If left empty, the ImageNet-21k class labels are used.
 
-Note, that we here compare components with textual concepts derived from the ImageNet-21k dataset.
+## Explore How CLIP Components Contribute to Predictions
+To explore how CLIP components contribute to predictions, we provide scripts for attribution scoring.
 
+### Attribution Scoring
+<div align="center">
+<img src="static/attribution_example.png" width="900" alt="Attribution" />
+</div>
+
+To compute the most relevant components for a given text prompt and image, we can use the following command:
+```bash
+python3 -m experiments.compute_attribution_scores --config_file $config_file --text_prompt 'a photo of a cat' --img_url 'your_image_path.jpg'
+```
+
+where `$config_file` is the path to the configuration file for computing attribution scores, 
+`text_prompt` is the text prompt to use,
+and `img_url` is the path to the image.
 
 ## Citation
 
