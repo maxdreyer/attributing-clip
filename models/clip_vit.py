@@ -27,7 +27,6 @@ def get_clip_vit(
         "ViT-L-14": 1024,
         "ViT-L-14-336": 1024,
         "ViT-H-14-quickgelu": 1280,
-        "MobileCLIP-S2": 512
     }[name]
 
     def add_sae(self, sae):
@@ -45,6 +44,7 @@ def get_clip_vit(
         print("Warning: No transformer found in the vision model. No SAE will be applied.")
 
     if return_clip_model:
+        clip_model.tokenizer = open_clip.get_tokenizer(name)
         return clip_model
 
     return vision_model
@@ -59,9 +59,11 @@ def forward_transformer(self, x: torch.Tensor, attn_mask: Optional[torch.Tensor]
             # Apply SAE to each token embedding (e.g., shape [B, T, D])
             if self.use_sae:
                 if self.sae.token_type == "cls":
-                    self.sae(x[:, 0])  # Apply SAE to the CLS token
+                    sae_out = self.sae(x[:, 0])[0]  # Apply SAE to the CLS token
+                    x[:, 0] = sae_out + (x[:, 0] - sae_out).detach()
                 elif self.sae.token_type == "spatial":
-                    self.sae(x[:, 1:])
+                    sae_out = self.sae(x[:, 1:])  # Apply SAE to the spatial tokens
+                    x[:, 1:] = sae_out + (x[:, 1:] - sae_out).detach()
 
     if not self.transformer.batch_first:
         x = x.transpose(0, 1)
