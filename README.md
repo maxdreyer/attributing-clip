@@ -63,8 +63,8 @@ Most CLIP models from OpenCLIP are supported, including:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/semanticlens.git
-cd semanticlens
+git clone https://github.com/maxdreyer/attributing-clip
+cd attributing-clip
 
 # Create and activate environment (example with Python 3.10)
 python3.10 -m venv .venv
