@@ -28,7 +28,7 @@ Train Sparse Autoencoders (SAEs) on CLIP embeddings to uncover internal represen
 </ul>
 
 
-⚙️ **Attribution Scores** *(WIP)*  
+⚙️ **Attribution Scores**
 Estimate how individual latent components contribute to CLIP's output.
 
 🧮 **Faithfulness Evaluation** *(WIP)*  
@@ -154,6 +154,17 @@ python3 -m experiments.compute_attribution_scores --config_file $config_file --t
 where `$config_file` is the path to the configuration file for computing attribution scores, 
 `text_prompt` is the text prompt to use,
 and `img_url` is the path to the image.
+
+
+## Evaluate Faithfulness of Attribution Scores *(WIP)*
+To evaluate the faithfulness of attribution scores, we provide scripts for deletion-based faithfulness evaluation.
+To compute the faithfulness of attribution scores, we can use the following command:
+```bash
+python3 -m experiments.eval_faithfulness --config_file $config_file --num_steps 10 --num_classes 2
+```
+where `$config_file` is the path to the configuration file for evaluating faithfulness,
+`num_steps` specifies the number of components to be ablated for the evaluation,
+and `num_classes` specifies the number of classes to use for the evaluation.
 
 ## Citation
 
