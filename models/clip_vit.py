@@ -59,11 +59,9 @@ def forward_transformer(self, x: torch.Tensor, attn_mask: Optional[torch.Tensor]
             # Apply SAE to each token embedding (e.g., shape [B, T, D])
             if self.use_sae:
                 if self.sae.token_type == "cls":
-                    sae_out = self.sae(x[:, 0])[0]  # Apply SAE to the CLS token
-                    x[:, 0] = sae_out + (x[:, 0] - sae_out).detach()
+                    x[:, 0] = self.sae(x[:, 0])[0]  # Apply SAE to the CLS token
                 elif self.sae.token_type == "spatial":
-                    sae_out = self.sae(x[:, 1:])  # Apply SAE to the spatial tokens
-                    x[:, 1:] = sae_out + (x[:, 1:] - sae_out).detach()
+                    x[:, 1:] = self.sae(x[:, 1:])[0]  # Apply SAE to the spatial tokens
 
     if not self.transformer.batch_first:
         x = x.transpose(0, 1)

@@ -34,6 +34,7 @@ class TopKSAE(nn.Module):
         self.hook_pre_sae = nn.Identity()
         self.hook_hidden_post = nn.Identity()
         self.hook_post_sae = nn.Identity()
+        self.add_residual = True  # Whether to add residual connections in SAE
         self.encoder = nn.Sequential(
             weight_norm(nn.Linear(input_dim, hidden_dim)),
         )
@@ -56,7 +57,7 @@ class TopKSAE(nn.Module):
         x = self.hook_pre_sae(x)
         if len(x.shape) == 2:
             z = self.encoder(x)
-            z_bar = self.top_k_masking(z)
+            z_bar = self.top_k_masking(z).detach()
             z_bar = self.hook_hidden_post(z_bar)
             x_recon = self.decoder(z_bar)
             x_recon = self.hook_post_sae(x_recon)
@@ -64,10 +65,12 @@ class TopKSAE(nn.Module):
             batch_size = x.shape[0]
             token_dim = x.shape[1]
             z = self.encoder(x.reshape(batch_size * token_dim, -1))
-            z_bar = self.top_k_masking(z)
+            z_bar = self.top_k_masking(z).detach()
             z_bar = self.hook_hidden_post(z_bar.reshape(batch_size, token_dim, -1))
             x_recon = self.decoder(z_bar.reshape(batch_size * token_dim, -1))
             x_recon = self.hook_post_sae(x_recon.reshape(batch_size, token_dim, -1))
+        if self.add_residual:
+            x_recon = x_recon + (x - x_recon).detach()
         return x_recon, z, z_bar
 
     @classmethod
@@ -78,6 +81,9 @@ class TopKSAE(nn.Module):
         sae_kwargs['input_dim'] = model.hidden_dim
         sae = cls(**sae_kwargs)
         if "ckpt_path" in sae_kwargs:
-            print(f"Loading SAE weights from {sae_kwargs['ckpt_path']}")
-            sae.load_state_dict(torch.load(sae_kwargs["ckpt_path"])["state_dict"])
+            try:
+                print(f"Loading SAE weights from {sae_kwargs['ckpt_path']}")
+                sae.load_state_dict(torch.load(sae_kwargs["ckpt_path"])["state_dict"])
+            except:
+                print("Error loading SAE checkpoint, using default weights.")
         return sae
