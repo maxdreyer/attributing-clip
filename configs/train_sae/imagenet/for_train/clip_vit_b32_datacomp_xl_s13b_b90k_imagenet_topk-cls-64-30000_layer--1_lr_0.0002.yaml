@@ -1,0 +1,17 @@
+batch_size: 32
+ckpt_path: ''
+data_path: /datasets/ImageNet
+dataset_name: imagenet
+lr: 0.0002
+lr_scheduler: MultiStepLR
+milestones:
+- 24
+- 28
+model_name: clip_vit_b32_datacomp_xl_s13b_b90k
+num_epochs: 30
+sae_hidden_dim: 30000
+sae_k: 64
+sae_layer_idx: -1
+sae_token: cls
+wandb_api_key: your_wandb_api_key_here
+wandb_project_name: attributing-clip-train-sae-0

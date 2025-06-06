@@ -94,7 +94,8 @@ batch size, and number of epochs.
 # Train a Sparse Autoencoder on CLIP embeddings
 python3 -m model_training.train_sae --config_file $config_file
 ```
-where `$config_file` is the path to the configuration file for training.
+where `$config_file` is the path to the configuration file for training. Please use configs in `for_train` for training,
+and `after_train` for inference. In the latter configs, the SAE checkpoint path is already specified.
 
 ## Explore What CLIP Components Encode
 To understand what CLIP components encode, we provide scripts for feature visualization and semantic alignment scoring.

@@ -15,4 +15,4 @@ sae_k: 64
 sae_layer_idx: -1
 sae_token: cls
 wandb_api_key: your_wandb_api_key_here
-wandb_project_name: saemanticlens-train-sae-1
+wandb_project_name: attributing-clip-train-sae-0

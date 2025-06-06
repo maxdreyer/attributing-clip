@@ -1,5 +1,5 @@
 # DATASET PATHS
-imagenet_dir: /datasets/ImageNet-complete
+imagenet_dir: /datasets/ImageNet
 
 # WANDB CONFIG
 wandb_api_key: 'your_wandb_api_key_here'
