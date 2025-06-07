@@ -114,13 +114,13 @@ class Vanilla(LitClassifier):
         self.total_samples = 0  # Number of samples processed
 
     def hook_pre_activations(self, module, input, output):
-        self.pre_activations = output
+        self.pre_activations = output.clone()
 
     def hook_post_activations(self, module, input, output):
-        self.post_activations = output
+        self.post_activations = output.clone()
 
     def hook_hidden_activations(self, module, input, output):
-        self.hidden_activations = output
+        self.hidden_activations = output.clone()
 
     def on_train_epoch_start(self) -> None:
         self.model.eval()

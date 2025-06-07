@@ -57,7 +57,7 @@ class TopKSAE(nn.Module):
         x = self.hook_pre_sae(x)
         if len(x.shape) == 2:
             z = self.encoder(x)
-            z_bar = self.top_k_masking(z).detach()
+            z_bar = self.top_k_masking(z)
             z_bar = self.hook_hidden_post(z_bar)
             x_recon = self.decoder(z_bar)
             x_recon = self.hook_post_sae(x_recon)
@@ -65,7 +65,7 @@ class TopKSAE(nn.Module):
             batch_size = x.shape[0]
             token_dim = x.shape[1]
             z = self.encoder(x.reshape(batch_size * token_dim, -1))
-            z_bar = self.top_k_masking(z).detach()
+            z_bar = self.top_k_masking(z)
             z_bar = self.hook_hidden_post(z_bar.reshape(batch_size, token_dim, -1))
             x_recon = self.decoder(z_bar.reshape(batch_size * token_dim, -1))
             x_recon = self.hook_post_sae(x_recon.reshape(batch_size, token_dim, -1))

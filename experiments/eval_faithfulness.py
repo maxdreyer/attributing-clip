@@ -79,8 +79,7 @@ delete_components = []
 
 
 def hook_activations(module, input, output):
-    output.detach()
-    output = output.requires_grad_()
+    output = output.detach().requires_grad_()
     sae_activations[0] = output
     if len(delete_components):
         batch_indices = torch.arange(len(delete_components)).unsqueeze(1).expand(-1, delete_components.shape[1])
@@ -102,7 +101,7 @@ for CLASS_ID in tqdm(np.arange(0, 5, 1)):
 
     sample_ids_class = sample_ids[dataset.targets == CLASS_ID]
     class_dataset = torch.utils.data.Subset(dataset, sample_ids_class)
-    class_dl = DataLoader(class_dataset, batch_size=batch_, shuffle=False, num_workers=8)
+    class_dl = DataLoader(class_dataset, batch_size=batch_size, shuffle=False, num_workers=8)
 
     sae_activations_class = []
     grads_class = []
@@ -155,7 +154,7 @@ for CLASS_ID in tqdm(np.arange(0, 5, 1)):
             for i in range(num_steps):
                 perturbed = []
                 for j, (x, y) in enumerate(class_dl):
-                    delete_components = ordering_[np.arange(len(class_dataset))[j * batch_:(j + 1) * batch_], :i + 1]
+                    delete_components = ordering_[np.arange(len(class_dataset))[j * batch_size:(j + 1) * batch_size], :i + 1]
                     vis_out = vis_model(x.to(device).detach())
                     image_embedding = vis_out / vis_out.norm(dim=-1, keepdim=True)
                     output_score = (image_embedding @ text_out.T.detach()).squeeze()
