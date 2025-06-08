@@ -101,19 +101,20 @@ lab_sae = torch.cat([
     for i in range(len(sem_emb_sae)//10 + 1)
 ], dim=-1).detach().cpu()
 
-dataset = get_dataset(dataset_name)(data_path=config_dict["data_path"], normalize_data=False, split="train")
+dataset = get_dataset(dataset_name)(data_path=config_dict["data_path"], normalize_data=False, split=dataset_split)
 
 ## Filter components
+NUM_COMPONENTS = 6
 min_activation = args.min_activation
 min_clarity = args.min_clarity
 max_clarity = args.max_clarity
 filt = (mean_activations > min_activation) & (clarity_score > min_clarity) & (clarity_score < max_clarity)
-ids_filt = torch.where(filt)[0][lab_sae.amax(0)[filt].topk(20, largest=args.most_aligned).indices]
+ids_filt = torch.where(filt)[0][lab_sae.amax(0)[filt].topk(NUM_COMPONENTS, largest=args.most_aligned).indices]
 
 resize = torchvision.transforms.Resize((120, 120))
 
 print(f"Plotting concept examples...")
-components_filtered = ids_filt[0:6]
+components_filtered = ids_filt[0:NUM_COMPONENTS]
 fig, axs = plt.subplots(1, len(components_filtered), dpi=300, figsize=(len(components_filtered) * 2.5 / 1.5, 5.5 / 1.3))
 for i, inds in enumerate(components_filtered):
     NUM = 6
